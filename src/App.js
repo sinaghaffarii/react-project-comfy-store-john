@@ -29,6 +29,8 @@ function App() {
         <Route exact path="/products">
           <Products />
         </Route>
+        {/* --------- :id  برای اینه که وقتی روش کلیک شد نسبت به اون آیدی که داره بهمون نشون بده */}
+        <Route exact path="/products/:id" children={<SingleProduct />} />
         <Route exact path="/cart">
           <Cart />
         </Route>
@@ -43,8 +45,6 @@ function App() {
         </Route>
         {/* ستاره در مسیر دهی بابت این میباشد که هر جا صفحه ای رو پیدا نکرد این رو نشون بده */}
         <Route path="*" component={Error} />
-        {/* --------- :id  برای اینه که وقتی روش کلیک شد نسبت به اون آیدی که داره بهمون نشون بده */}
-        <Route path="/products/:id" children={<SingleProduct />} />
       </Switch>
       <Footer />
     </Router>

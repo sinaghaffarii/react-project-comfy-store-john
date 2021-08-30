@@ -2,13 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const PageHero = ({ title }) => {
+const PageHero = ({ title, product }) => {
   return (
-    <Wrapper>
+    <Wrapper >
       {/* -----------------------------------برای قست بالایی سایت میباشد که آدرس سایت رو تا اون صفحه ای که توش قرار داریم رو نشون میده */}
       {/* و این title همون props هست که اسم اون صفحه مورد نظر رو نشون میده */}
-      <h3>
-        <Link to="/">Home</Link>/ {title}
+      <h3 className="section-center">
+        <Link to="/">Home</Link>
+        {/* اگر props product رو در خودش داشت این عبارت رو هم اضافه کن */}
+        {product && <Link to="/products">/ Products</Link>}
+        / {title}
+
       </h3>
     </Wrapper>
   );

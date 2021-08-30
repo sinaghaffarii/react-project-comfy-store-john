@@ -15,11 +15,17 @@ import {
 
 // -------- مقدار هایی که ردیوسر و اکشن رو به هم وصل میکنه تا بتونیم داخل کامپوننت ها ازشون اسفاده کنیم
 const initialState = {
+  // SIDEBAR
   isOpenSidebar: false,
+  // ALL PRODUCTS
   products_loading: false,
   products_error: false,
   products: [],
   featured_products: [],
+  // SINGLE PAGE PRODUCT
+  single_product_loading: false,
+  single_product_error: false,
+  single_product: {},
 };
 
 const ProductsContext = React.createContext();
@@ -49,6 +55,19 @@ export const ProductsProvider = ({ children }) => {
       dispatch({ type: GET_PRODUCTS_ERROR });
     }
   };
+
+  // برای گرفتن محصول به صورت تک صفحه ای یه تابع دیگه تعریف میکنیم و این تابع رو در VALUE PROVIDER قرار میدیم
+  const fetchSingleProduct = async (url) => {
+    dispatch({ type: GET_SINGLE_PRODUCT_BEGIN });
+    try {
+      const response = await axios.get(url);
+      const singleProduct = response.data;
+      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: singleProduct });
+    } catch (error) {
+      dispatch({ type: GET_SINGLE_PRODUCT_ERROR });
+    }
+  };
+
   // با هر بار رندر شدن اجرا میشه
   useEffect(() => {
     fetchProducts(url);
@@ -56,7 +75,9 @@ export const ProductsProvider = ({ children }) => {
 
   return (
     // با استفاده از کانتکست اکسن های نوشته شده رو به کامپوننت ارسال میکنیم و حتما باید مقادیر داخل ولیو ریخته شود
-    <ProductsContext.Provider value={{ ...state, openSidebar, closeSidebar }}>
+    <ProductsContext.Provider
+      value={{ ...state, openSidebar, closeSidebar, fetchSingleProduct }}
+    >
       {children}
     </ProductsContext.Provider>
   );

@@ -1,9 +1,31 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from "react";
+import styled from "styled-components";
 
-const ProductImages = () => {
-  return <h4>product images</h4>
-}
+const ProductImages = ({ images = [{ url: "" }] }) => {
+  // برای این که بتونیم عکس هارو فراخوانی بکنیم باید عکس هارو بریزیم تو پراپزی که اونور مشخص کردیم و این جا به وسیله useState اون هارو استخراج کنیم
+  const [main, setMain] = useState(images[0]);
+
+  return (
+    <Wrapper>
+    {/* چون به images index صفر دادیم اولین عکس را از لیست نشون میده وبا هر بار کلیک کردن index آن محصول مشخص میکنه کدوم عکس جایگزین عکس اصلی بشه */}
+      <img src={main.url} alt="main_image" />
+      <div className="gallery">
+        {images.map((image, index) => {
+          return (
+            <img
+              src={image.url}
+              alt={image.filename}
+              key={index}
+              onClick={() => setMain(images[index])}
+              // هرکدوم از عکس های گالری با عکس اصلی یکی بود دورس سایه بنداز
+              className={`${main.url === image.url ? "active" : null}`}
+            />
+          );
+        })}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .main {
@@ -48,6 +70,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default ProductImages
+export default ProductImages;
