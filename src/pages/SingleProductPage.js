@@ -53,12 +53,14 @@ const SingleProductPage = () => {
     id: sku,
     name,
     price,
-    featured,
     images,
     description,
     company,
     stock,
+    reviews,
+    stars
   } = product;
+
 
   return (
     <Wrapper>
@@ -73,7 +75,7 @@ const SingleProductPage = () => {
           <ProductImages images={images} />
           <div className="content">
             <h2>{name}</h2>
-            <Stars />
+            <Stars stars={stars} reviews={reviews}/>
             {/* format price for add $ and 000.00 */}
             <span className="price">{formatPrice(price)}</span>
             <p className="desc">{description}</p>
@@ -92,7 +94,7 @@ const SingleProductPage = () => {
             </div>
             <hr />
             {/* باز اگر محصول موجود بود اجازه اضافه کردن به سبد خرید رو بده */}
-            {stock > 0 && <AddToCart />}
+            {stock > 0 && <AddToCart product={product} />}
           </div>
         </div>
       </div>

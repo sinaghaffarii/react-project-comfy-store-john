@@ -1,9 +1,29 @@
-import React from 'react'
-import styled from 'styled-components'
-import { BsStarFill, BsStarHalf, BsStar } from 'react-icons/bs'
-const Stars = () => {
-  return <h4>stars</h4>
-}
+import React from "react";
+import styled from "styled-components";
+import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs";
+const Stars = ({ stars, reviews }) => {
+  const tempStars = Array.from({ length: 5 }, (_, index) => {
+    const number = index + 0.5;
+    return (
+      <span>
+        {stars >= index + 1 ? (
+          <BsStarFill />
+        ) : stars >= number ? (
+          <BsStarHalf />
+        ) : (
+          <BsStar />
+        )}
+      </span>
+    );
+  });
+
+  return (
+    <Wrapper>
+      <div className="stars">{tempStars}</div>
+      <p className="reviews">({reviews} customer reviews)</p>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   display: flex;
@@ -18,5 +38,63 @@ const Wrapper = styled.div`
     margin-bottom: 0;
   }
   margin-bottom: 0.5rem;
-`
-export default Stars
+`;
+export default Stars;
+
+// با این روش هم میتونیم بنویسیم ولی روش بالایی راحت تر تمیز تره
+
+//  {/* star */}
+//  <span>
+//  {stars >= 1 ? (
+//    <BsStarFill />
+//  ) : stars >= 0.5 ? (
+//    <BsStarHalf />
+//  ) : (
+//    <BsStar />
+//  )}
+// </span>
+// {/* end of star */}
+// {/* star */}
+// <span>
+//  {stars >= 2 ? (
+//    <BsStarFill />
+//  ) : stars >= 1.5 ? (
+//    <BsStarHalf />
+//  ) : (
+//    <BsStar />
+//  )}
+// </span>
+// {/* end of star */}
+// {/* star */}
+// <span>
+//  {stars >= 3 ? (
+//    <BsStarFill />
+//  ) : stars >= 2.5 ? (
+//    <BsStarHalf />
+//  ) : (
+//    <BsStar />
+//  )}
+// </span>
+// {/* end of star */}
+// {/* star */}
+// <span>
+//  {stars >= 4 ? (
+//    <BsStarFill />
+//  ) : stars >= 3.5 ? (
+//    <BsStarHalf />
+//  ) : (
+//    <BsStar />
+//  )}
+// </span>
+// {/* end of star */}
+// {/* star */}
+// <span>
+//  {stars === 5 ? (
+//    <BsStarFill />
+//  ) : stars >= 4.5 ? (
+//    <BsStarHalf />
+//  ) : (
+//    <BsStar />
+//  )}
+// </span>
+// {/* end of star */}

@@ -8,8 +8,10 @@ const ProductImages = ({ images = [{ url: "" }] }) => {
   return (
     <Wrapper>
     {/* چون به images index صفر دادیم اولین عکس را از لیست نشون میده وبا هر بار کلیک کردن index آن محصول مشخص میکنه کدوم عکس جایگزین عکس اصلی بشه */}
-      <img src={main.url} alt="main_image" />
-      <div className="gallery">
+  
+     <div className="main">
+     <img src={main.url} alt="main_image" />
+     <div className="gallery">
         {images.map((image, index) => {
           return (
             <img
@@ -23,6 +25,9 @@ const ProductImages = ({ images = [{ url: "" }] }) => {
           );
         })}
       </div>
+     </div>
+     
+     
     </Wrapper>
   );
 };
