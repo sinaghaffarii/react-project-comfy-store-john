@@ -41,7 +41,7 @@ const AddToCart = ({ product }) => {
               <div
                 key={index}
                 className={`${
-                  colors[0] === color ? "color-btn active" : "color-btn"
+                  mainColor === color ? "color-btn active" : "color-btn"
                 }`}
                 onClick={() => setMainColor(color)}
                 style={{ background: color }}
