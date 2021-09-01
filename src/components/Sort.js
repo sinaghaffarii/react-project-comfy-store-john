@@ -1,10 +1,60 @@
-import React from 'react'
-import { useFilterContext } from '../context/filter_context'
-import { BsFillGridFill, BsList } from 'react-icons/bs'
-import styled from 'styled-components'
+import React from "react";
+import { useFilterContext } from "../context/filter_context";
+import { BsFillGridFill, BsList } from "react-icons/bs";
+import styled from "styled-components";
+
 const Sort = () => {
-  return <h4>sort </h4>
-}
+  const {
+    // مقادیری که از کانتکست فیلتر تعریفشون کردیم
+    filtered_products: products,
+    grid_view,
+    setGridView,
+    setListView,
+    sort,
+    updateSort,
+  } = useFilterContext();
+  return (
+    <Wrapper>
+      <div className="btn-container">
+        <button
+          onClick={setGridView}
+          type="button"
+          className={`${grid_view ? "active" : null}`}
+        >
+          {" "}
+          <BsFillGridFill />
+        </button>
+        <button
+          onClick={setListView}
+          type="button"
+          className={`${!grid_view ? "active" : null}`}
+        >
+          {" "}
+          <BsList />
+        </button>
+      </div>
+      <p>{products.length} Products Found</p>
+      <hr />
+      <form>
+        <label htmlFor="sort">Sort By</label>
+        <select
+          name="sort"
+          id="sort"
+          className="sort-input"
+          // مقدار داخل این اینپوت هارو با SORT به REDUCER میفرستیم
+          value={sort}
+          // با این مقدار هم آپدیتشون میکنیم
+          onChange={updateSort}
+        >
+          <option value="price-lowest">Price (Lowest)</option>
+          <option value="price-highest">Price (Highest)</option>
+          <option value="name-a">Name (a-z)</option>
+          <option value="name-z">Name (z-a)</option>
+        </select>
+      </form>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   display: grid;
@@ -67,6 +117,6 @@ const Wrapper = styled.section`
     font-size: 1rem;
     text-transform: capitalize;
   }
-`
+`;
 
-export default Sort
+export default Sort;

@@ -19,6 +19,7 @@ const initialState = {
   all_products: [],
   // ------------ for sort products (GridView or ListView)
   grid_view: true,
+  sort: "lowest-price",
 };
 
 // ------------- Create Context
@@ -35,8 +36,35 @@ export const FilterProvider = ({ children }) => {
     dispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
 
+  // مخصولات رو به این صورت با reducer match میکنیم
+  useEffect(() => {
+    dispatch({type: SORT_PRODUCTS})
+  }, [products , state.sort])
+
+
+// ------------- SHOW PRODUCTS GRID
+  const setGridView = () => {
+    dispatch({ type: SET_GRIDVIEW });
+  };
+  // ---------- SHOW PRODUCTS LIST
+  const setListView = () => {
+    dispatch({ type: SET_LISTVIEW });
+  };
+
+  // ----------------- مقدار داخل SELECT OPTIONS رو برامون استخراج میکنه
+  const updateSort = (e) => {
+    // for demonstration نمایش
+    // const name = e.target.name;
+    const value = e.target.value;
+    dispatch({type: UPDATE_SORT , payload: value})
+  };
+
+ 
+
   return (
-    <FilterContext.Provider value={{ ...state }}>
+    <FilterContext.Provider
+      value={{ ...state, setGridView, setListView, updateSort }}
+    >
       {children}
     </FilterContext.Provider>
   );
