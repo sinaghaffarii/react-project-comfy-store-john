@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import reducer from "../reducers/filter_reducer";
 import {
+  // ------------- for show products
   LOAD_PRODUCTS,
   SET_GRIDVIEW,
   SET_LISTVIEW,
@@ -13,18 +14,24 @@ import {
 import { useProductsContext } from "./products_context";
 
 const initialState = {
+  // -------------- for fetching products
   filtered_products: [],
   all_products: [],
+  // ------------ for sort products (GridView or ListView)
   grid_view: true,
 };
 
+// ------------- Create Context
 const FilterContext = React.createContext();
 
+// ------------------ Create Provider for Context
 export const FilterProvider = ({ children }) => {
+  //  --------------- گرفتن محصولات از کانتکس قبلی
   const { products } = useProductsContext();
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
+    // -------------- اضافه کردن محصولات به اکشن جدید به این صورت
     dispatch({ type: LOAD_PRODUCTS, payload: products });
   }, [products]);
 
@@ -35,6 +42,7 @@ export const FilterProvider = ({ children }) => {
   );
 };
 // make sure use
+// -------------------- Create Hooks Context
 export const useFilterContext = () => {
   return useContext(FilterContext);
 };

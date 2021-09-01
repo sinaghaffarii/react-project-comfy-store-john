@@ -13,7 +13,8 @@ const ListView = ({ products }) => {
             <div>
               <h4>{name}</h4>
               <h5 className="price">{formatPrice(price)}</h5>
-              <p>{description.substring(0,150)} ...</p>
+              {/* --------------- Substring به این معنی که بیشتر از این کلمه به کاربری در این مرحله نشون نده */}
+              <p>{description.substring(0, 150)} ...</p>
               <Link to={`/products/${id}`} className="btn">
                 Details
               </Link>

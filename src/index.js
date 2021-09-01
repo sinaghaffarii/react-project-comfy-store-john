@@ -9,6 +9,7 @@ import { UserProvider } from "./context/user_context";
 import { Auth0Provider } from "@auth0/auth0-react";
 
 ReactDOM.render(
+  // فایل اپ رو به ترتیب داخل provider ها میذاریم
   <ProductsProvider>
     <FilterProvider>
       <App />

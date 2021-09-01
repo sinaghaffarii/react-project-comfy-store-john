@@ -10,6 +10,7 @@ import {
 } from "../actions";
 
 const filter_reducer = (state, action) => {
+  // ---------------------- ریختن محصولات به آرایه هایی که تو کانتکست تعریفشون کردیم 
   if (action.type === LOAD_PRODUCTS) {
     return {
       ...state,
