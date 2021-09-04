@@ -12,14 +12,20 @@ import {
 const filter_reducer = (state, action) => {
   // ---------------------- ریختن محصولات به آرایه هایی که تو کانتکست تعریفشون کردیم
   if (action.type === LOAD_PRODUCTS) {
+    // بالاترین قیمت محصول رو میگیریم و داخل از متغیر میریزیم
+    let maxPrice = action.payload.map((p) => p.price);
+    maxPrice = Math.max(...maxPrice);
+
     return {
       ...state,
-      all_Products: [...action.payload],
+      all_products: [...action.payload],
       filtered_products: [...action.payload],
+      // بالاترین قیمت محصول که بالا در متغیر ریختیم اینجا به مقدار هایی که به فیلترز دادیم میریزیم
+      filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
     };
   }
 
-  // --------- grid نمایش محصولات تو حالت 
+  // --------- grid نمایش محصولات تو حالت
   if (action.type === SET_GRIDVIEW) {
     return { ...state, grid_view: true };
   }
@@ -47,18 +53,29 @@ const filter_reducer = (state, action) => {
     }
     // اگه با این مقدار رو برابر شد ترتیب رو از اولین حروف الفبا نشون بده  دقت شود که از localCompare استفاده شده
     if (sort === "name-a") {
-      tempProducts = tempProducts.sort((a, b ) => {
-        return a.name.localeCompare(b.name)
-      })
+      tempProducts = tempProducts.sort((a, b) => {
+        return a.name.localeCompare(b.name);
+      });
     }
     // اگه با این مقدار برابر شد از آخرین حروف الفبا نشون بده تا اولین
     if (sort === "name-z") {
       tempProducts = tempProducts.sort((a, b) => {
-        return b.name.localeCompare(a.name)
-      })
+        return b.name.localeCompare(a.name);
+      });
     }
+
     // حتما در بازگشت تابع هم باید متغیری که تعریف کردیم رو با محصولات match کنیم
     return { ...state, filtered_products: tempProducts };
+  }
+  // مقادیر وارد شده در اینپوت سرچ رو به کانتست وصل میکنه
+  if (action.type === UPDATE_FILTERS) {
+    const { name, value } = action.payload;
+    return { ...state, filters: { ...state.filters, [name]: value } };
+  }
+  // --------- FOR CATEGORIES FILTERS
+  if (action.type === FILTER_PRODUCTS) {
+    console.log('filtering products')
+    return { ...state };
   }
 
   throw new Error(`No Matching "${action.type}" - action type`);
