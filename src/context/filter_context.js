@@ -49,9 +49,9 @@ export const FilterProvider = ({ children }) => {
 
   // مخصولات رو به این صورت با reducer match میکنیم
   useEffect(() => {
-    dispatch({type : FILTER_PRODUCTS})
+    dispatch({ type: FILTER_PRODUCTS });
     dispatch({ type: SORT_PRODUCTS });
-  }, [products, state.sort , state.filters]);
+  }, [products, state.sort, state.filters]);
 
   // ------------- SHOW PRODUCTS GRID
   const setGridView = () => {
@@ -75,13 +75,28 @@ export const FilterProvider = ({ children }) => {
   const updateFilters = (e) => {
     let name = e.target.name;
     let value = e.target.value;
-  
-    if(name === 'category') {
-      value = e.target.textContent
+    // category
+    if (name === "category") {
+      value = e.target.textContent;
+    }
+    // colors
+    if (name === "color") {
+      value = e.target.dataset.color;
+    }
+    // price
+    if (name === "price") {
+      value = Number(value);
+    }
+    // shipping
+    if (name === "shipping") {
+      value = e.target.checked;
     }
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
-  const clearFilters = () => {};
+  // --------- RESET FILTERS
+  const clearFilters = () => {
+    dispatch({type: CLEAR_FILTERS})
+  };
 
   return (
     <FilterContext.Provider

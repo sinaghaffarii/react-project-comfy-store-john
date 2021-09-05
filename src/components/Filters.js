@@ -32,6 +32,7 @@ const Filters = () => {
       <div className="content">
         <form onSubmit={(e) => e.preventDefault()}>
           {/* SEARCH INPUT */}
+
           <div className="form-control">
             <input
               type="text"
@@ -42,6 +43,7 @@ const Filters = () => {
               onChange={updateFilters}
             />
           </div>
+
           {/* END SEARCH INPUT */}
           {/* CATEGORY */}
           <div className="form-control">
@@ -65,7 +67,90 @@ const Filters = () => {
             </div>
           </div>
           {/*  END OF CATEGORY */}
+          {/*  COMPANY */}
+          <div className="form-control">
+            <h5>Company</h5>
+            <select
+              className="company"
+              name="company"
+              onChange={updateFilters}
+              value={company}
+            >
+              {companies.map((c, index) => {
+                return (
+                  <option key={index} value={c}>
+                    {c}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          {/*  END OF COMPANY */}
+          {/* COLORS */}
+          <div className="form-control">
+            <h5>Colors</h5>
+            <div className="colors">
+              {colors.map((c, index) => {
+                if (c === "all") {
+                  return (
+                    <button
+                      key={index}
+                      name="color"
+                      data-color="all"
+                      className={color === "all" ? "all-btn active" : "all-btn"}
+                      onClick={updateFilters}
+                    >
+                      all
+                    </button>
+                  );
+                }
+                return (
+                  <button
+                    key={index}
+                    name="color"
+                    style={{ background: c }}
+                    className={color === c ? "active color-btn" : "color-btn"}
+                    onClick={updateFilters}
+                    data-color={c}
+                  >
+                    {color === c ? <FaCheck /> : null}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          {/* END OF COLORS */}
+          {/* PRICE */}
+          <div className="form-control">
+            <h5>Price</h5>
+            <p className="price">{formatPrice(price)}</p>
+            <input
+              type="range"
+              name="price"
+              onChange={updateFilters}
+              min={min_price}
+              max={max_price}
+              value={price}
+            />
+          </div>
+          {/* END OF PRICE */}
+          {/*  SHIPPING  */}
+          <div className="form-control shipping">
+            <label htmlFor="shipping">Free Shipping</label>
+            <input
+              type="checkBox"
+              name="shipping"
+              id="shipping"
+              onChange={updateFilters}
+              checked={shipping}
+            />
+          </div>
+          {/*  END OF SHIPPING  */}
         </form>
+        <button className="clear-btn" type="button" onClick={clearFilters}>
+          Clear Filters
+        </button>
       </div>
     </Wrapper>
   );

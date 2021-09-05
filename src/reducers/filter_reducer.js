@@ -74,8 +74,59 @@ const filter_reducer = (state, action) => {
   }
   // --------- FOR CATEGORIES FILTERS
   if (action.type === FILTER_PRODUCTS) {
-    console.log('filtering products')
-    return { ...state };
+    const { all_products } = state;
+    const { text, category, company, price, color, shipping } = state.filters;
+    let tempProducts = [...all_products];
+    // FILTERING
+    // SEARCH
+    if (text) {
+      tempProducts = tempProducts.filter((product) => {
+        return product.name.toLowerCase().startsWith(text);
+      });
+    }
+    // CATEGORY
+    if (category !== "all") {
+      tempProducts = tempProducts.filter(
+        (product) => product.category === category
+      );
+    }
+    // COMPANY
+    if (company !== "all") {
+      tempProducts = tempProducts.filter(
+        (product) => product.company === company
+      );
+    }
+    // COLORS
+    if (color !== "all") {
+      tempProducts = tempProducts.filter((product) => {
+        return product.colors.find((c) => c === color);
+      });
+    }
+    // PRICE
+    tempProducts = tempProducts.filter(product  => product.price <= price)
+    // SHIPPING
+    if (shipping) {
+      tempProducts = tempProducts.filter(
+        (product) => product.shipping === true
+      );
+    }
+    // ---------------
+    return { ...state, filtered_products: tempProducts };
+  }
+  // --------------------
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: "",
+        company: "all",
+        category: "all",
+        color: "all",
+        price: state.filters.max_price,
+        shipping: false,
+      },
+    };
   }
 
   throw new Error(`No Matching "${action.type}" - action type`);

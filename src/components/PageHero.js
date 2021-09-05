@@ -7,13 +7,15 @@ const PageHero = ({ title, product }) => {
     <Wrapper >
       {/* -----------------------------------برای قست بالایی سایت میباشد که آدرس سایت رو تا اون صفحه ای که توش قرار داریم رو نشون میده */}
       {/* و این title همون props هست که اسم اون صفحه مورد نظر رو نشون میده */}
-      <h3 className="section-center">
+    <div className="section-center">
+    <h3 >
         <Link to="/">Home</Link>
         {/* اگر props product رو در خودش داشت این عبارت رو هم اضافه کن */}
         {product && <Link to="/products">/ Products</Link>}
         / {title}
 
       </h3>
+    </div>
     </Wrapper>
   );
 };
