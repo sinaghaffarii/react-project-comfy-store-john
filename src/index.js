@@ -12,7 +12,9 @@ ReactDOM.render(
   // فایل اپ رو به ترتیب داخل provider ها میذاریم
   <ProductsProvider>
     <FilterProvider>
-      <App />
+      <CartProvider>
+        <App />
+      </CartProvider>
     </FilterProvider>
   </ProductsProvider>,
 
