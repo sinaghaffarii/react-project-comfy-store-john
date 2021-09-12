@@ -1,34 +1,49 @@
-import React from 'react'
-import { FaShoppingCart, FaUserMinus, FaUserPlus } from 'react-icons/fa'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import { useProductsContext } from '../context/products_context'
-import { useCartContext } from '../context/cart_context'
-import { useUserContext } from '../context/user_context'
-
+import React from "react";
+import { FaShoppingCart, FaUserMinus, FaUserPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { useProductsContext } from "../context/products_context";
+import { useCartContext } from "../context/cart_context";
+import { useUserContext } from "../context/user_context";
 
 // این کامپوننت برای login , cart درست شده
 
 const CartButtons = () => {
+  const { total_items } = useCartContext();
   // خط پایینی برای اینه که وقتی کلیک شد روی یکی از آیتم ها sidebar بسته بشه
-  const {closeSidebar} = useProductsContext()
+  const { closeSidebar } = useProductsContext();
+
+  const { loginWithRedirect, logout, myUser } = useUserContext();
+
   return (
     <Wrapper className="cart-btn-wrapper">
-     <Link to="/cart " onClick={closeSidebar}>
-     <div className="cart-btn">
-      Cart
-       <span className="cart-container">
-         <FaShoppingCart/>
-         <span className="cart-value">12</span>
-       </span>
-      </div>
-     </Link>
-      <button type="button" className="auth-btn" onClick={closeSidebar}>
-        Login <FaUserPlus/>
-      </button>
+      <Link to="/cart " onClick={closeSidebar}>
+        <div className="cart-btn">
+          Cart
+          <span className="cart-container">
+            <FaShoppingCart />
+            <span className="cart-value">{total_items}</span>
+          </span>
+        </div>
+      </Link>
+      {/* if myUser is true show me log out else show me login */}
+      {myUser ? (
+        <button
+          type="button"
+          className="auth-btn"
+          onClick={() => logout({ returnTo: window.location.origin })}
+        >
+          {" "}
+          logout <FaUserMinus />
+        </button>
+      ) : (
+        <button type="button" className="auth-btn" onClick={loginWithRedirect}>
+          Login <FaUserPlus />
+        </button>
+      )}
     </Wrapper>
-  )
-}
+  );
+};
 
 const Wrapper = styled.div`
   display: grid;
@@ -82,5 +97,5 @@ const Wrapper = styled.div`
       margin-left: 5px;
     }
   }
-`
-export default CartButtons
+`;
+export default CartButtons;

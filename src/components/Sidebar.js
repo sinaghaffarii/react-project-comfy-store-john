@@ -1,44 +1,50 @@
-import React from 'react'
-import logo from '../assets/logo.svg'
-import { Link } from 'react-router-dom'
-import { useProductsContext } from '../context/products_context'
-import { FaBars, FaTimes } from 'react-icons/fa'
-import { links } from '../utils/constants'
-import styled from 'styled-components'
-import CartButtons from './CartButtons'
-import { useUserContext } from '../context/user_context'
+import React from "react";
+import logo from "../assets/logo.svg";
+import { Link } from "react-router-dom";
+import { useProductsContext } from "../context/products_context";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { links } from "../utils/constants";
+import styled from "styled-components";
+import CartButtons from "./CartButtons";
+import { useUserContext } from "../context/user_context";
 
 const Sidebar = () => {
-  const {isOpenSidebar, closeSidebar} = useProductsContext()
-
+  const { isOpenSidebar, closeSidebar } = useProductsContext();
+  const { myUser } = useUserContext();
 
   return (
-    
     <SidebarContainer>
-    {/* این شرط که به وسیه context از file Products-contxt گرفتیم اگر true بشه sidebar رو نشون میده و اگر false بشه نشون نمیده */}
-    {/* close sidebar رو به تمام آیتم های sidebar میدیم تا اگه روش کلیک شد isOpenSidebar false بشه */}
-    <aside className={`${isOpenSidebar ? 'sidebar show-sidebar' : 'sidebar '}`}>
-      <div className="sidebar-header">
-        <img src={logo} className="logo" alt="comfy sloth"/>
-        <button className="close-btn" onClick={closeSidebar}><FaTimes/></button>
-      </div>
-      <ul className="links">
-        {links.map((link) => {
-          const {id , url , text} = link
-          return <li key={id} onClick={closeSidebar}>
-            <Link to={url} >{text}</Link>
-          </li>
-        })}
-        <li onClick={closeSidebar}>
-          <Link to="/checkout" >Checkout</Link>
-        </li>
-      </ul>
-      <CartButtons/>
-    </aside>
-
+      {/* این شرط که به وسیه context از file Products-contxt گرفتیم اگر true بشه sidebar رو نشون میده و اگر false بشه نشون نمیده */}
+      {/* close sidebar رو به تمام آیتم های sidebar میدیم تا اگه روش کلیک شد isOpenSidebar false بشه */}
+      <aside
+        className={`${isOpenSidebar ? "sidebar show-sidebar" : "sidebar "}`}
+      >
+        <div className="sidebar-header">
+          <img src={logo} className="logo" alt="comfy sloth" />
+          <button className="close-btn" onClick={closeSidebar}>
+            <FaTimes />
+          </button>
+        </div>
+        <ul className="links">
+          {links.map((link) => {
+            const { id, url, text } = link;
+            return (
+              <li key={id} onClick={closeSidebar}>
+                <Link to={url}>{text}</Link>
+              </li>
+            );
+          })}
+          {myUser && (
+            <li onClick={closeSidebar}>
+              <Link to="/checkout">Checkout</Link>
+            </li>
+          )}
+        </ul>
+        <CartButtons />
+      </aside>
     </SidebarContainer>
-  ) 
-}
+  );
+};
 
 const SidebarContainer = styled.div`
   text-align: center;
@@ -109,6 +115,6 @@ const SidebarContainer = styled.div`
       display: none;
     }
   }
-`
+`;
 
-export default Sidebar
+export default Sidebar;

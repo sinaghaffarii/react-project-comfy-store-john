@@ -31,18 +31,17 @@ function App() {
         </Route>
         {/* --------- :id  برای اینه که وقتی روش کلیک شد نسبت به اون آیدی که داره بهمون نشون بده */}
         <Route exact path="/products/:id" children={<SingleProduct />} />
-        <Route exact path="/cart">
+        {/* برای این که سبد خرید رو نشون بده بعد آی دی علامت سوال میذاریم */}
+        <Route exact path="/cart:id?">
           <Cart />
         </Route>
         <Route exact path="/authwrapper">
           <AuthWrapper />
         </Route>
-        <Route exact path="/checkout">
+        <PrivateRoute exact path="/checkout">
           <Checkout />
-        </Route>
-        <Route exact path="/privateroute">
-          <PrivateRoute />
-        </Route>
+        </PrivateRoute>
+       
         {/* ستاره در مسیر دهی بابت این میباشد که هر جا صفحه ای رو پیدا نکرد این رو نشون بده */}
         <Route path="*" component={Error} />
       </Switch>

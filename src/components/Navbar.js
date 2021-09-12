@@ -9,6 +9,7 @@ import { useProductsContext } from '../context/products_context'
 import { useUserContext } from '../context/user_context'
 
 const Nav = () => {
+  const {myUser} = useUserContext()
   // ----------------------------- برای باز کردن SIDEBAR استفاده میشه 
   const {openSidebar} = useProductsContext()
   return (
@@ -28,6 +29,9 @@ const Nav = () => {
                   </Link>
                 </li>
             })}
+            {myUser && <li>
+              <Link to="/checkout">checkout</Link>
+            </li>}
           </ul>
          <CartButtons/>
         </div>
