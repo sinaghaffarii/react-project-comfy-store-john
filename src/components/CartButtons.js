@@ -9,7 +9,7 @@ import { useUserContext } from "../context/user_context";
 // این کامپوننت برای login , cart درست شده
 
 const CartButtons = () => {
-  const { total_items } = useCartContext();
+  const { total_items, clearCart } = useCartContext();
   // خط پایینی برای اینه که وقتی کلیک شد روی یکی از آیتم ها sidebar بسته بشه
   const { closeSidebar } = useProductsContext();
 
@@ -31,7 +31,10 @@ const CartButtons = () => {
         <button
           type="button"
           className="auth-btn"
-          onClick={() => logout({ returnTo: window.location.origin })}
+          onClick={() => {
+            clearCart();
+            logout({ returnTo: window.location.origin });
+          }}
         >
           {" "}
           logout <FaUserMinus />

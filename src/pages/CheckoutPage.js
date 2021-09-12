@@ -6,15 +6,26 @@ import { useCartContext } from "../context/cart_context";
 import { Link } from "react-router-dom";
 
 const CheckoutPage = () => {
+  const {cart } = useCartContext()
   return (
     <main>
       {/* title props میباشد که برای دریافت داده ای که درون کامپوننت pageHero قراره نشون داده بشه مشخص میکنیم */}
       <PageHero title="Checkout" />
       <Wrapper className="page">
-        <h3 className="section">checkout page</h3>
+        {cart.length < 1 ? <div className="empty">
+          <h2>your cart is empty</h2>
+          <Link to="/products" className="btn">fill it</Link>
+        </div> : <StripeCheckout/>}
       </Wrapper>
     </main>
   );
 };
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+.empty {
+  text-align: center
+}
+`;
 export default CheckoutPage;
